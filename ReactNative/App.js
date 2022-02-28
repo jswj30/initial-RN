@@ -49,6 +49,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text>Today's Info</Text>
       <FlatList 
         data={data}
         renderItem={renderItem}
@@ -62,7 +63,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1, 
+    flex: 1, 
   }, 
   renderArea: {
     // borderWidth: 1, 
