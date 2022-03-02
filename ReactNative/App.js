@@ -1,5 +1,5 @@
 import React, {useState, useLayoutEffect} from 'react';
-import {View, Text, SafeAreaView, FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, Text, SafeAreaView, FlatList, StyleSheet, ActivityIndicator, TextInput, KeyboardAvoidingView} from 'react-native';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -16,11 +16,11 @@ const App = () => {
     fetch('https://jsonplaceholder.typicode.com/posts/')
     .then((res) => res.json())
     .then((res) => {
-      let result = data.concat(res.slice(offset, offset + 10));
+      let result = data.concat(res.slice(offset, offset + 3));
       setData([...result]);
     })
     .then(() => {
-      setOffset(offset + 10);
+      setOffset(offset + 3);
       setIsLoading(false);
     })
     .catch((err) => {
@@ -50,13 +50,29 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Today's Info</Text>
-      <FlatList 
+      {/* <FlatList 
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.8}
-      />
+      /> */}
+      {
+        data.map((item, index) => {
+          return (
+            <KeyboardAvoidingView 
+              style={styles.renderArea} 
+              key={index}
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+              <Text>{item.id}</Text>
+              <TextInput />
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.content}>{item.body}</Text>
+            </KeyboardAvoidingView>
+          )
+        })
+      }
     </SafeAreaView>
   )
 };
